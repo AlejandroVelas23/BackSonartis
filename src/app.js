@@ -9,7 +9,7 @@ const app = express();
 // Middleware de seguridad
 app.use(helmet());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.FrontUrl,
   credentials: true
 }));
 
