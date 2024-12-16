@@ -1,5 +1,6 @@
 import app from './app.js';
-import { Pool } from 'pg'; // Asegúrate de estar usando Pool de 'pg' para gestionar conexiones
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const PORT = process.env.PORT || 3000;
 
