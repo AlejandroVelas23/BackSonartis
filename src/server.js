@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import pkg from 'pg';
 const { Pool } = pkg;
+
+console.log('Database Host:', process.env.DB_HOST); // Debería mostrar 'junction.proxy.rlwy.net'
 
 const pool = new Pool({
   user: process.env.DB_USER,       // "postgres"
