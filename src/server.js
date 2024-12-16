@@ -25,3 +25,7 @@ pool.query('SELECT NOW()', (err) => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
+
+console.log('Database Host:', process.env.DB_HOST);
+console.log('Database Port:', process.env.DB_PORT);
+console.log('Database User:', process.env.DB_USER);
