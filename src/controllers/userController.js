@@ -2,6 +2,22 @@ import UserService from '../services/userService.js';
 import { validationResult } from 'express-validator';
 
 export default class UserController {
+  static async register(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const userData = req.body;
+      const user = await UserService.register(userData);
+      res.status(201).json(user);
+    } catch (error) {
+      console.error('Registration error:', error);
+      res.status(500).json({ message: 'Error en el registro', error: error.message });
+    }
+  }
+
   static async login(req, res) {
     try {
       console.log('Login attempt:', {
@@ -49,6 +65,28 @@ export default class UserController {
         message: 'Error interno del servidor',
         error: process.env.NODE_ENV === 'development' ? error.message : undefined
       });
+    }
+  }
+
+  static async getProfile(req, res) {
+    try {
+      const userId = req.user.id;
+      const profile = await UserService.getProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      console.error('Get profile error:', error);
+      res.status(500).json({ message: 'Error al obtener el perfil', error: error.message });
+    }
+  }
+
+  static async getAppointments(req, res) {
+    try {
+      const userId = req.user.id;
+      const appointments = await UserService.getAppointments(userId);
+      res.json(appointments);
+    } catch (error) {
+      console.error('Get appointments error:', error);
+      res.status(500).json({ message: 'Error al obtener las citas', error: error.message });
     }
   }
 }
