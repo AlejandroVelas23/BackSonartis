@@ -15,31 +15,40 @@ export default class UserService {
   }
 
   static async login(email, password) {
-    const user = await UserModel.findByEmail(email);
-    if (!user) {
-      throw new Error('Invalid credentials');
-    }
+    try {
+      const user = await UserModel.findByEmail(email);
+      if (!user) {
+        console.log('User not found:', email);
+        throw new Error('Invalid credentials');
+      }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
-      throw new Error('Invalid credentials');
-    }
-    const secretKey = process.env.JWT_SECRET;
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      if (!isValidPassword) {
+        console.log('Invalid password for user:', email);
+        throw new Error('Invalid credentials');
+      }
+
+      const secretKey = process.env.JWT_SECRET;
       if (!secretKey) {
+        console.error('JWT_SECRET is not defined in environment variables');
         throw new Error('JWT secret is not defined');
       }
 
-    const token = jwt.sign(
-      { 
-        id: user.id, 
-        email: user.email,
-        is_nutritionist: user.is_nutritionist 
-      },
-      secretKey,
-      { expiresIn: '24h' }
-    );
+      const token = jwt.sign(
+        { 
+          id: user.id, 
+          email: user.email,
+          is_nutritionist: user.is_nutritionist 
+        },
+        secretKey,
+        { expiresIn: '24h' }
+      );
 
-    return { token, user: { ...user, password: undefined } };
+      return { token, user: { ...user, password: undefined } };
+    } catch (error) {
+      console.error('Login service error:', error);
+      throw error;
+    }
   }
 
   static async getProfile(userId) {

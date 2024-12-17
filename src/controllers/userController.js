@@ -4,7 +4,6 @@ import { validationResult } from 'express-validator';
 export default class UserController {
   static async login(req, res) {
     try {
-      // Log the incoming request
       console.log('Login attempt:', {
         email: req.body.email,
         timestamp: new Date().toISOString()
@@ -20,7 +19,6 @@ export default class UserController {
 
       const { email, password } = req.body;
       
-      // Validate required fields
       if (!email || !password) {
         return res.status(400).json({
           message: 'Email and password are required'
@@ -29,7 +27,6 @@ export default class UserController {
 
       const result = await UserService.login(email, password);
       
-      // Log successful login
       console.log('Login successful:', {
         email,
         userId: result.user.id,
@@ -38,7 +35,6 @@ export default class UserController {
 
       return res.json(result);
     } catch (error) {
-      // Log the error details
       console.error('Login error:', {
         message: error.message,
         stack: error.stack,

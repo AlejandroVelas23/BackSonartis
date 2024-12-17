@@ -6,14 +6,16 @@ import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
-
+// CORS configuration
+app.use(cors({
+  origin: process.env.FrontUrl,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Middleware de seguridad
 app.use(helmet());
-app.use(cors({
-  origin: process.env.FrontUrl,
-  credentials: true
-}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -28,22 +30,13 @@ app.use(express.json({ limit: '10kb' })); // Limitar tamaño de payload
 // Rutas
 app.use('/api/users', userRoutes);
 
-app.options('*', cors());
-
+// Manejador de errores global
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ 
     message: 'Error interno del servidor',
     error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
-});
-// Manejador de errores global
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://sonartis.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
 });
 
 export default app;
