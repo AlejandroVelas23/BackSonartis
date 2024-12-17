@@ -6,6 +6,8 @@ import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
+
+
 // Middleware de seguridad
 app.use(helmet());
 app.use(cors({

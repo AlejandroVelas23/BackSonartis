@@ -22,20 +22,14 @@ export default class UserController {
 
   static async login(req, res) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
       const { email, password } = req.body;
-      const result = await UserService.login(email, password);
+      const result = await ClientService.login(email, password);
       res.json(result);
     } catch (error) {
       if (error.message === 'Invalid credentials') {
-        return res.status(401).json({ message: 'Credenciales inválidas' });
+        return res.status(401).json({ message: error.message });
       }
-      console.error('Error en el login:', error);
-      res.status(500).json({ message: 'Error interno del servidor' });
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
 
@@ -51,11 +45,10 @@ export default class UserController {
 
   static async getAppointments(req, res) {
     try {
-      const appointments = await UserService.getAppointments(req.user.id);
+      const appointments = await ClientService.getAppointments(req.user.id);
       res.json(appointments);
     } catch (error) {
-      console.error('Error al obtener las citas:', error);
-      res.status(500).json({ message: 'Error interno del servidor' });
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
 }

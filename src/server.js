@@ -30,3 +30,4 @@ pool.query('SELECT NOW()', (err) => {
 console.log('Database Host:', process.env.DB_HOST);
 console.log('Database Port:', process.env.DB_PORT);
 console.log('Database User:', process.env.DB_USER);
+console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'Configurado' : 'No configurado');
