@@ -4,6 +4,9 @@ import UserController from '../controllers/userController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const router = Router();
+router.get('/test', (req, res) => {
+  res.json({ message: 'API is working' });
+});
 
 // Validaciones para el registro
 const registerValidations = [
