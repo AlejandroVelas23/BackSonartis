@@ -3,7 +3,7 @@ import { userController } from './controllers/userController.js';
 import { nutritionistController } from './controllers/nutritionistController.js';
 import { appointmentController } from './controllers/appointmentController.js';
 import { paymentController } from './controllers/paymentController.js';
-import { authenticateToken, authenticateRole } from './middleware/auth.js';
+import { authenticateToken, authenticateRole } from './middlewares/auth.js';
 
 const router = express.Router();
 
