@@ -4,6 +4,9 @@ import bcrypt from 'bcrypt';
 
 export const userController = {
   async register(req, res, next) {
+    console.log('Register route hit');
+    console.log('Request body:', req.body);
+    
     const { first_name, last_name, email, password, age } = req.body;
     
     try {
@@ -17,8 +20,10 @@ export const userController = {
       const user = result.rows[0];
       const token = generateToken({ id: user.id, email: user.email, role: 'user' });
 
+      console.log('User registered successfully:', user);
       res.status(201).json({ message: 'Usuario registrado exitosamente', user, token });
     } catch (error) {
+      console.error('Error in register function:', error);
       next(error);
     }
   },
