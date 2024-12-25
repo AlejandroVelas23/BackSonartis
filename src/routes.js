@@ -1,5 +1,6 @@
 import express from 'express';
 import { userController } from './controllers/userController.js';
+import { sendEmail } from './controllers/emailController.js';
 import { nutritionistController } from './controllers/nutritionistController.js';
 import { appointmentController } from './controllers/appointmentController.js';
 import { paymentController } from './controllers/paymentController.js';
@@ -10,6 +11,7 @@ const router = express.Router();
 // Rutas públicas
 router.post('/register', userController.register);
 router.post('/login', userController.login);
+router.post('/send-email', sendEmail);
 
 // Rutas protegidas
 router.use(authenticateToken);
