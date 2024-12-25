@@ -39,7 +39,7 @@ app.post('/api/send-email', async (req, res) => {
 
   const mailOptions = {
     from: 'velasquito2333@gmail.com',
-    to: 'info@sonartis.com.mx',
+    to: 'info@sonartsis.com.mx',
     subject: 'Nuevo mensaje de contacto',
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
