@@ -38,14 +38,14 @@ app.post('/api/send-email', async (req, res) => {
   const { name, lastName, email, phone, message } = req.body;
 
   const mailOptions = {
-    from: 'your-email@gmail.com',
-    to: 'recipient-email@example.com',
-    subject: 'New Contact Form Submission',
+    from: 'velasquito2333@gmail.com',
+    to: 'info@sonartis.com.mx',
+    subject: 'Nuevo mensaje de contacto',
     text: `
-      Name: ${name} ${lastName}
-      Email: ${email}
-      Phone: ${phone}
-      Message: ${message}
+      Yo: ${name} ${lastName}
+      con correo: ${email}
+      y celular: ${phone}
+      le comunico: ${message}
     `
   };
 
